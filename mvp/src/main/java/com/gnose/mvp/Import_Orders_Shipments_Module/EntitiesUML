@@ -1,0 +1,26 @@
+@startuml Import_Orders_Shipments_Module
+entity "Import_Orders" as orders {
+  * id : int
+  * company_id : int
+  * order_number : string
+  * status : string
+  * created_at : datetime
+}
+
+entity "Shipments" as shipments {
+  * id : int
+  * import_order_id : int
+  * ship_id : int
+  * departure_date : date
+  * arrival_date : date
+}
+
+entity "Shipment_Containers" as shipment_containers {
+  * id : int
+  * shipment_id : int
+  * container_id : int
+}
+
+orders ||--o{ shipments : "contém"
+shipments ||--o{ shipment_containers : "inclui"
+@enduml

@@ -1,0 +1,15 @@
+@startuml Ports_Ships_Module
+entity "Ports" as ports {
+  * id : int
+  * name : string
+  * code : string
+  * country : string
+}
+
+entity "Ships" as ships {
+  * id : int
+  * name : string
+  * imo_number : string
+  * capacity_teu : int
+}
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+entity "Companies" as company {
+  * id : int
+  * name : string
+  * cnpj : string
+  * created_at : datetime
+  * updated_at : datetime
+}
+
+entity "Users" as users {
+  * id : int
+  * email : string
+  * name : string
+  * password_hash : string
+  * is_active : bool
+  * created_at : datetime
+  * updated_at : datetime
+}
+
+entity "User_Companies" as user_companies {
+  * id : int
+  * user_id : int
+  * company_id : int
+  * role_id : int
+}
+
+entity "Roles" as roles {
+  * id : int
+  * name : string
+  * company_id : int
+}
+
+entity "Permissions" as permissions {
+  * id : int
+  * code : string
+  * description : string
+}
+
+entity "Role_Permissions" as role_permissions {
+  * id : int
+  * role_id : int
+  * permission_id : int
+}
+
+' Relacionamentos
+company ||--o{ user_companies : "possui"
+users ||--o{ user_companies : "atribuído a"
+company ||--o{ roles : "define"
+roles ||--o{ user_companies : "associado a"
+roles ||--o{ role_permissions : "inclui"
+permissions ||--o{ role_permissions : "utilizada em"
+@enduml

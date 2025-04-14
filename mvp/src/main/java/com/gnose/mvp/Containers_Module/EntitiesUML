@@ -1,0 +1,19 @@
+@startuml Containers_Module
+entity "Containers" as containers {
+  * id : int
+  * container_number : string
+  * type : string
+  * size : string
+  * company_id : int
+}
+
+entity "Container_Movements" as movements {
+  * id : int
+  * container_id : int
+  * timestamp : datetime
+  * port_id : int
+  * status : string
+}
+
+containers ||--o{ movements : "registra"
+@enduml
