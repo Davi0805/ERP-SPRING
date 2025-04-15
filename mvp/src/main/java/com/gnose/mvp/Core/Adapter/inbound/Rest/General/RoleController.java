@@ -1,13 +1,12 @@
-package com.gnose.mvp.Core.Adapter;
+package com.gnose.mvp.Core.Adapter.inbound.Rest.General;
 
 import com.gnose.mvp.Core.Models.RolesJpaEntity;
-import com.gnose.mvp.Core.Repositories.RoleJpaRepository;
+import com.gnose.mvp.Core.Adapter.outbound.Repositories.RoleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/roles")
