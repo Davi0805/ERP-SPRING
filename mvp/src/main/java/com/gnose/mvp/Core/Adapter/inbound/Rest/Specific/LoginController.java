@@ -2,8 +2,8 @@ package com.gnose.mvp.Core.Adapter.inbound.Rest.Specific;
 
 import com.gnose.mvp.Core.Adapter.inbound.DTO.Specific.LoginDTO;
 import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.UserPermissionsDTO;
-import com.gnose.mvp.Core.Application.AuthService;
 import com.gnose.mvp.Core.Application.JwtService;
+import com.gnose.mvp.Core.Application.PermissionService;
 import com.gnose.mvp.Core.Application.RedisService;
 import com.gnose.mvp.Core.Application.UserService;
 import com.gnose.mvp.Core.Models.UserJpaEntity;
@@ -24,13 +24,13 @@ import java.util.List;
 public class LoginController {
 
     private final UserService userService;
-    private final AuthService authService;
+    private final PermissionService authService;
     private final JwtService jwtService;
     private final RedisService redisService;
 
     @Autowired
     public LoginController(UserService userService,
-                           AuthService authService,
+                           PermissionService authService,
                            JwtService jwtService,
                            RedisService redisService)
     {

@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthService {
+public class PermissionService {
 
     private final AuthJpaRepository jpaRepository;
 
     @Autowired
-    public AuthService(AuthJpaRepository jpaRepository)
+    public PermissionService(AuthJpaRepository jpaRepository)
     {
         this.jpaRepository = jpaRepository;
     }
