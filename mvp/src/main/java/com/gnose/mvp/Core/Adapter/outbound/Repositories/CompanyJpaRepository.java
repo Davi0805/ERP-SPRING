@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Repositories;
+package com.gnose.mvp.Core.Adapter.outbound.Repositories;
 
 import com.gnose.mvp.Core.Models.CompanyJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
