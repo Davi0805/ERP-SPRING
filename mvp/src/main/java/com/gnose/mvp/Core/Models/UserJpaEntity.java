@@ -34,9 +34,6 @@ public class UserJpaEntity {
     @Column(nullable = false)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserCompanyJpaEntity> userCompanies;
-
     @LastModifiedDate
     private LocalDateTime updatedAt;
 

@@ -23,7 +23,4 @@ public class PermissionsJpaEntity {
     private String code;
 
     private String description;
-
-    @OneToMany(mappedBy = "permission")
-    private List<RolePermissionsJpaEntity> rolePermissions;
 }

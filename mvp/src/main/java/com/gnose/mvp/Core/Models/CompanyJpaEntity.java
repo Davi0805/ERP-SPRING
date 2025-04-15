@@ -34,11 +34,5 @@ public class CompanyJpaEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "company")
-    private List<RolesJpaEntity> roles;
-
-    @OneToMany(mappedBy = "company")
-    private List<UserCompanyJpaEntity> userCompanies;
-
     private boolean isActive;
 }

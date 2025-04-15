@@ -18,15 +18,9 @@ public class UserCompanyJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserJpaEntity userId;
+    private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private CompanyJpaEntity companyId;
+    private Long companyId;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private RolesJpaEntity roleId;
+    private Long roleId;
 }

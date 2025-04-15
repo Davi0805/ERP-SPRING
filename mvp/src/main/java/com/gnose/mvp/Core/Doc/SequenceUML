@@ -1,0 +1,28 @@
+@startuml
+actor Admin
+participant CompanyService
+participant UserService
+participant RoleService
+participant PermissionService
+
+Admin -> CompanyService : createCompany("XPTO Ltda", "12345678000100")
+CompanyService -> CompanyRepository : save()
+
+Admin -> UserService : createUser("user@xpto.com", "senha")
+UserService -> UserRepository : save()
+
+Admin -> UserService : assignUserToCompany(userId, companyId)
+UserService -> UserCompanyRepository : save()
+
+Admin -> RoleService : createRole("Admin", companyId)
+RoleService -> RoleRepository : save()
+
+Admin -> PermissionService : createPermission("MANAGE_USERS")
+PermissionService -> PermissionRepository : save()
+
+Admin -> RoleService : assignPermissionToRole(roleId, permissionId)
+RoleService -> RolePermissionRepository : save()
+
+Admin -> UserService : assignRoleToUserInCompany(userId, companyId, roleId)
+UserService -> UserCompanyRepository : update role
+@enduml

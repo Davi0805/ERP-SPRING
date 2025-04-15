@@ -21,14 +21,5 @@ public class RolesJpaEntity {
 
     private String name;
 
-    // company_id relationship
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private CompanyJpaEntity company;
-
-    @OneToMany(mappedBy = "role")
-    private List<UserCompanyJpaEntity> userCompanies;
-
-    @OneToMany(mappedBy = "role")
-    private List<RolePermissionsJpaEntity> rolePermissions;
+    private Long companyId;
 }

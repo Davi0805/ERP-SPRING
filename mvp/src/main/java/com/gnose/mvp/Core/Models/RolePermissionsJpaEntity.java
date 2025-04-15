@@ -17,11 +17,7 @@ public class RolePermissionsJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private RolesJpaEntity roleId;
+    private Long roleId;
 
-    @ManyToOne
-    @JoinColumn(name = "permission_id", nullable = false)
-    private PermissionsJpaEntity permission;
+    private Long permissionId;
 }
