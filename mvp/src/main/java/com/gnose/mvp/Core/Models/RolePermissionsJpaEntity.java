@@ -11,6 +11,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "role_permission")
 public class RolePermissionsJpaEntity {
 
     @Id
