@@ -1,4 +1,4 @@
-package com.gnose.mvp.Ports_Ships_Module.Models;
+package com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class ShipsJpaEntity {
     private String name;
 
     @Column(unique = true)
-    private String imo_number; // international ship unique identifier
+    private String imo; // international ship unique identifier
 
     private Integer capacity; // in TEU (Twenty-foot Equivalent Unit)
 }

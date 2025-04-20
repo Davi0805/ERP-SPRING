@@ -1,6 +1,6 @@
-package com.gnose.mvp.Ports_Ships_Module.Adapter.Outbound.Repositories;
+package com.gnose.mvp.Ports_Ships_Module.Infrastructure.Adapters.Repositories;
 
-import com.gnose.mvp.Ports_Ships_Module.Models.PortJpaEntity;
+import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.PortJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

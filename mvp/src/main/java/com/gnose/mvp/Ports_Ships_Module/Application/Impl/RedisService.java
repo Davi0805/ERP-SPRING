@@ -1,9 +1,9 @@
-package com.gnose.mvp.Ports_Ships_Module.Application;
+package com.gnose.mvp.Ports_Ships_Module.Application.Impl;
 
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.CompanyPermissionDTO;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.SessionRedisDTO;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.UserPermissionsDTO;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.SessionRedisRepository;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.CompanyPermissionDTO;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.SessionRedisDTO;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.UserPermissionsDTO;
+import com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories.SessionRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

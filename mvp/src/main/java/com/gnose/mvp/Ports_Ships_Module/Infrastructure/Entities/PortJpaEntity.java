@@ -1,4 +1,4 @@
-package com.gnose.mvp.Ports_Ships_Module.Models;
+package com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
