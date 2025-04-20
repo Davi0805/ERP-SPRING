@@ -17,7 +17,7 @@ import org.springframework.data.redis.core.mapping.RedisMappingContext;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableRedisRepositories(basePackages = "com.gnose.mvp.Core.Adapter.outbound.Repositories")
+@EnableRedisRepositories(basePackages = "com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories")
 public class RedisConfig {
     @Value("${spring.data.redis.host}")
     private String redisHost;

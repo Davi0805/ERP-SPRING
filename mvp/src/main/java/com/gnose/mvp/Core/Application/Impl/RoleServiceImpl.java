@@ -1,6 +1,6 @@
 package com.gnose.mvp.Core.Application.Impl;
 
-import com.gnose.mvp.Core.Adapter.outbound.RoleJpaRepository;
+import com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories.RoleJpaRepository;
 import com.gnose.mvp.Core.Application.UseCases.IRoleService;
 import com.gnose.mvp.Core.Infrastructure.Entities.RolesJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;

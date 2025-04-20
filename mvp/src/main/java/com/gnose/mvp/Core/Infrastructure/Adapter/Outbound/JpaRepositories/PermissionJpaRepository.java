@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Adapter.outbound;
+package com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories;
 
 import com.gnose.mvp.Core.Infrastructure.Entities.PermissionsJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

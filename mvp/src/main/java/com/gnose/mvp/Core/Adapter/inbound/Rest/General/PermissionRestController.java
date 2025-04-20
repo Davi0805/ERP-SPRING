@@ -1,7 +1,7 @@
 package com.gnose.mvp.Core.Adapter.inbound.Rest.General;
 
 import com.gnose.mvp.Core.Infrastructure.Entities.PermissionsJpaEntity;
-import com.gnose.mvp.Core.Adapter.outbound.PermissionJpaRepository;
+import com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories.PermissionJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

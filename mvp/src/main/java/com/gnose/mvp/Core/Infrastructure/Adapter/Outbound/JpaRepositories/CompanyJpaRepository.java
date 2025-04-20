@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Adapter.outbound;
+package com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories;
 
 import com.gnose.mvp.Core.Infrastructure.Entities.CompanyJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CompanyJpaRepository extends JpaRepository<CompanyJpaEntity, Long> {
     Optional<CompanyJpaEntity> findByCnpj(String cnpj);
+    Optional<CompanyJpaEntity> findByName(String name);
 }

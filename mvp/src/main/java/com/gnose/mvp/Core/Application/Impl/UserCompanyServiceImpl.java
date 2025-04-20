@@ -1,20 +1,21 @@
 package com.gnose.mvp.Core.Application.Impl;
 
+import com.gnose.mvp.Core.Adapter.outbound.Repositories.IUserCompanyRepository;
 import com.gnose.mvp.Core.Application.UseCases.IUserCompanyService;
 import com.gnose.mvp.Core.Infrastructure.Entities.CompanyJpaEntity;
 import com.gnose.mvp.Core.Infrastructure.Entities.UserCompanyJpaEntity;
 import com.gnose.mvp.Core.Infrastructure.Entities.UserJpaEntity;
-import com.gnose.mvp.Core.Adapter.outbound.UserCompanyJpaRepository;
+import com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories.UserCompanyJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserCompanyServiceImpl implements IUserCompanyService {
 
-    private final UserCompanyJpaRepository jpaRepository;
+    private final IUserCompanyRepository jpaRepository;
 
     @Autowired
-    public UserCompanyServiceImpl(UserCompanyJpaRepository jpaRepository)
+    public UserCompanyServiceImpl(IUserCompanyRepository jpaRepository)
     {
         this.jpaRepository = jpaRepository;
     }

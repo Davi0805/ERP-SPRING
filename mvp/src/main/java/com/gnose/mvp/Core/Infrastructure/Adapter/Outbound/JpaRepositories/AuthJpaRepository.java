@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Adapter.outbound;
+package com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories;
 
 
 import com.gnose.mvp.Core.Infrastructure.Entities.UserJpaEntity;
@@ -25,5 +25,5 @@ public interface AuthJpaRepository extends JpaRepository<UserJpaEntity, Long> {
                 WHERE u.id = ?
                 ORDER BY c.id, r.name
     """, nativeQuery = true)
-    List<Object[]> rawFindPermissionsByUserId(@Param("userId") Long userId);
+    List<Object[]> FindPermissionsByUserId(@Param("userId") Long userId);
 }
