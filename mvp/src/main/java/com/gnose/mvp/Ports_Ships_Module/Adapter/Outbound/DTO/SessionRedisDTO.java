@@ -1,6 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Module.Adapter.Outbound.DTO;
 
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.CompanyPermissionDTO;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.CompanyPermissionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
