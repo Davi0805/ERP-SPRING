@@ -6,6 +6,8 @@ import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntit
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContainerServiceImpl implements IContainerService {
 
@@ -52,20 +54,25 @@ public class ContainerServiceImpl implements IContainerService {
     }
 
     @Override
-    public ContainerJpaEntity getByType(String type) {
+    public List<ContainerJpaEntity> getByType(String type) {
         return containerJpaRepository.findByType(type)
                 .orElseThrow(() -> new RuntimeException("Container not found!"));
     }
 
     @Override
-    public ContainerJpaEntity getByWeight(String weight) {
+    public List<ContainerJpaEntity> getByWeight(String weight) {
         return containerJpaRepository.findByWeight(Integer.parseInt(weight))
                 .orElseThrow(() -> new RuntimeException("Container not found!"));
     }
 
     @Override
-    public ContainerJpaEntity getByCompanyId(Long companyId) {
+    public List<ContainerJpaEntity> getByCompanyId(Long companyId) {
         return containerJpaRepository.findByCompanyId(companyId)
                 .orElseThrow(() -> new RuntimeException("Container not found!"));
+    }
+
+    @Override
+    public List<ContainerJpaEntity> getAllContainers() {
+        return containerJpaRepository.findAll();
     }
 }

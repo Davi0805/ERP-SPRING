@@ -17,7 +17,7 @@ public class ContainerJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String ContainerNumber;
+    private String containerNumber;
 
     private String type;
 

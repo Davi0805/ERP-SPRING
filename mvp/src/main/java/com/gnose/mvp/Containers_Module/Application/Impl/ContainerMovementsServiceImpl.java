@@ -1,6 +1,7 @@
 package com.gnose.mvp.Containers_Module.Application.Impl;
 
 import com.gnose.mvp.Containers_Module.Application.UseCases.IContainerMovementService;
+import com.gnose.mvp.Containers_Module.Infrastructure.Adapters.ContainerJpaRepository;
 import com.gnose.mvp.Containers_Module.Infrastructure.Adapters.ContainerMovementsJpaRepository;
 import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerMovementsJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,20 @@ import java.util.List;
 public class ContainerMovementsServiceImpl implements IContainerMovementService {
 
     private final ContainerMovementsJpaRepository containerMovementsJpaRepository;
+    private final ContainerJpaRepository containerJpaRepository;
 
     @Autowired
-    public ContainerMovementsServiceImpl(ContainerMovementsJpaRepository containerMovementsJpaRepository) {
+    public ContainerMovementsServiceImpl(ContainerMovementsJpaRepository containerMovementsJpaRepository,
+                                         ContainerJpaRepository containerJpaRepository) {
         this.containerMovementsJpaRepository = containerMovementsJpaRepository;
+        this.containerJpaRepository = containerJpaRepository;
     }
 
     @Override
     public ContainerMovementsJpaEntity createContainerMovement(ContainerMovementsJpaEntity containerMovementsJpaEntity) {
+        if (!containerJpaRepository.existsById(containerMovementsJpaEntity.getContainerId())) {
+            throw new RuntimeException("Container not found!");
+        }
         return containerMovementsJpaRepository.save(containerMovementsJpaEntity);
     }
 
