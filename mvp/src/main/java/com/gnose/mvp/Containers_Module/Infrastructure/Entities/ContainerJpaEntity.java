@@ -17,7 +17,7 @@ public class ContainerJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String container_number;
+    private String ContainerNumber;
 
     private String type;
 
@@ -26,5 +26,5 @@ public class ContainerJpaEntity {
     //private Integer size;
 
     @Column(nullable = false)
-    private Long company_id;
+    private Long companyId;
 }

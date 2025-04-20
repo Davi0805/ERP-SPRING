@@ -21,13 +21,13 @@ public class ContainerMovementsJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long container_id;
+    private Long containerId;
 
     @CreatedDate
     private LocalDateTime movement_date;
 
     @Column(nullable = false)
-    private Long port_id;
+    private Long portId;
 
     private String status;
 }
