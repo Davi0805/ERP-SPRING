@@ -21,9 +21,9 @@ public class ContainerJpaEntity {
 
     private String type;
 
-    private String weight;
+    private Integer weight;
 
-    private String size;
+    //private Integer size;
 
     @Column(nullable = false)
     private Long company_id;
