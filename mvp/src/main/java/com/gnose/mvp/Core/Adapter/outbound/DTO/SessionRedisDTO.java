@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO;
+package com.gnose.mvp.Core.Adapter.outbound.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter

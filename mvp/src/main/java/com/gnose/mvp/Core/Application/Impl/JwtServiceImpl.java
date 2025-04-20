@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Application;
+package com.gnose.mvp.Core.Application.Impl;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -9,7 +9,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 @Component
-public class JwtService {
+public class JwtServiceImpl {
     @Value("${jwt.secret}")
     private String token;
 

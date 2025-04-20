@@ -1,7 +1,7 @@
-package com.gnose.mvp.Core.Adapter.outbound.Repositories;
+package com.gnose.mvp.Core.Adapter.outbound;
 
 
-import com.gnose.mvp.Core.Models.UserJpaEntity;
+import com.gnose.mvp.Core.Infrastructure.Entities.UserJpaEntity;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

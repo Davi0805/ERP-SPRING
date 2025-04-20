@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Models;
+package com.gnose.mvp.Core.Infrastructure.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor

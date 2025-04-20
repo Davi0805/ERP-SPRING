@@ -1,8 +1,8 @@
 package com.gnose.mvp.Core.Adapter.inbound.Rest.General;
 
 import com.gnose.mvp.Core.Adapter.inbound.DTO.General.CreateUserDTO;
-import com.gnose.mvp.Core.Application.UserService;
-import com.gnose.mvp.Core.Models.UserJpaEntity;
+import com.gnose.mvp.Core.Application.UseCases.IUserService;
+import com.gnose.mvp.Core.Infrastructure.Entities.UserJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final IUserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(IUserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<UserJpaEntity> getAllUsers() {

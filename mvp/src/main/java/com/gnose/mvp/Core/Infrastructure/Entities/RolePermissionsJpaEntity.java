@@ -1,26 +1,24 @@
-package com.gnose.mvp.Core.Models;
+package com.gnose.mvp.Core.Infrastructure.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.User;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Getter
 @Setter
-@Table(name = "user_companies")
-public class UserCompanyJpaEntity {
+@Table(name = "role_permission")
+public class RolePermissionsJpaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-
-    private Long companyId;
-
     private Long roleId;
+
+    private Long permissionId;
 }

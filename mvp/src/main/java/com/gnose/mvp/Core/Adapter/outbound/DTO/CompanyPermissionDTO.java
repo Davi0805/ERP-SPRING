@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO;
+package com.gnose.mvp.Core.Adapter.outbound.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.gnose.mvp.Core.Infrastructure.Mapper;
 
 import com.gnose.mvp.Core.Adapter.inbound.DTO.General.CreateCompanyDTO;
-import com.gnose.mvp.Core.Models.CompanyJpaEntity;
+import com.gnose.mvp.Core.Infrastructure.Entities.CompanyJpaEntity;
 
 import java.time.LocalDateTime;
 

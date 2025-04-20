@@ -1,7 +1,7 @@
 package com.gnose.mvp.Core.Adapter.inbound.Rest.General;
 
-import com.gnose.mvp.Core.Models.PermissionsJpaEntity;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.PermissionJpaRepository;
+import com.gnose.mvp.Core.Infrastructure.Entities.PermissionsJpaEntity;
+import com.gnose.mvp.Core.Adapter.outbound.PermissionJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +12,12 @@ import java.util.List;
 @RequestMapping("/api/permissions")
 public class PermissionRestController {
 
+    private final PermissionJpaRepository permissionsRepository;
+
     @Autowired
-    private PermissionJpaRepository permissionsRepository;
+    public PermissionRestController(PermissionJpaRepository permissionsRepository) {
+        this.permissionsRepository = permissionsRepository;
+    }
 
     @GetMapping
     public List<PermissionsJpaEntity> getAllPermissions() {

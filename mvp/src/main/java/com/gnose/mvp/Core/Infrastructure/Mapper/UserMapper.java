@@ -1,7 +1,7 @@
 package com.gnose.mvp.Core.Infrastructure.Mapper;
 
 import com.gnose.mvp.Core.Adapter.inbound.DTO.General.CreateUserDTO;
-import com.gnose.mvp.Core.Models.UserJpaEntity;
+import com.gnose.mvp.Core.Infrastructure.Entities.UserJpaEntity;
 
 import java.time.LocalDateTime;
 

@@ -1,9 +1,9 @@
-package com.gnose.mvp.Core.Application;
+package com.gnose.mvp.Core.Application.Impl;
 
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.CompanyPermissionDTO;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.SessionRedisDTO;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.DTO.UserPermissionsDTO;
-import com.gnose.mvp.Core.Adapter.outbound.Repositories.SessionRedisRepository;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.CompanyPermissionDTO;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.SessionRedisDTO;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.UserPermissionsDTO;
+import com.gnose.mvp.Core.Adapter.outbound.SessionRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class RedisService {
+public class RedisServiceImpl {
 
     private final SessionRedisRepository repository;
 
     @Autowired
-    public RedisService(SessionRedisRepository repository)
+    public RedisServiceImpl(SessionRedisRepository repository)
     {
         this.repository = repository;
     }

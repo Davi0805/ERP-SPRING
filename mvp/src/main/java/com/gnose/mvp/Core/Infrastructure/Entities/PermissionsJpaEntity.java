@@ -1,4 +1,4 @@
-package com.gnose.mvp.Core.Models;
+package com.gnose.mvp.Core.Infrastructure.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Getter
 @Setter
-@Table(name = "role_permission")
-public class RolePermissionsJpaEntity {
+@Table(name = "permissions")
+public class PermissionsJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long roleId;
+    private String code;
 
-    private Long permissionId;
+    private String description;
 }
