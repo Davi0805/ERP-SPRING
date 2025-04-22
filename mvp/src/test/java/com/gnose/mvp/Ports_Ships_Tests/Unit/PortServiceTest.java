@@ -17,9 +17,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
-import static reactor.core.publisher.Mono.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class PortServiceTest {
@@ -150,6 +149,41 @@ public class PortServiceTest {
         List<PortJpaEntity> response = portsService.getAllPorts();
 
         assertEquals(response, List.of(port1, port2));
+    }
+
+    @Test
+    public void deleteShipSuccess()
+    {
+        PortJpaEntity port1 = new PortJpaEntity();
+        port1.setId(1L);
+        port1.setCode("42DAPT");
+        port1.setCountry("China");
+        port1.setName("NAME MOCK1");
+
+        when(portJpaRepository.existsById(1L)).thenReturn(true);
+
+        portsService.deletePort(1L);
+
+        verify(portJpaRepository, times(1)).existsById(1L);
+    }
+
+    @Test
+    public void updateShipSuccess()
+    {
+        PortJpaEntity port1 = new PortJpaEntity();
+        port1.setId(1L);
+        port1.setCode("42DAPT");
+        port1.setCountry("China");
+        port1.setName("NAME MOCK1");
+
+        when(portJpaRepository.findById(1L)).thenReturn(Optional.of(port1));
+
+        portsService.updatePort(1L, "NAME MOCK2", "China", "41DAPT");
+
+        // need to change the interface and impl to receive a entity
+
+        //verify(portJpaRepository, times(1))
+        //        .save(new PortJpaEntity(1L, "NAME MOCK2", "China", "41DAPT"));
     }
 
 }
