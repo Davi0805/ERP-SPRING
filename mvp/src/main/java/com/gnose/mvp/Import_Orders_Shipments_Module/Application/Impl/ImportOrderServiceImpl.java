@@ -31,11 +31,15 @@ public class ImportOrderServiceImpl implements IImportOrderService {
 
     @Override
     public ImportOrdersJpaEntity update(ImportOrdersJpaEntity importOrder) {
+        if (!importOrderJpaRepository.existsById(importOrder.getId()))
+            throw new RuntimeException("Order not found!");
         return importOrderJpaRepository.save(importOrder);
     }
 
     @Override
     public void deleteImportOrder(Long importOrderId) {
+        if (!importOrderJpaRepository.existsById(importOrderId))
+            throw new RuntimeException("Order not found!");
         importOrderJpaRepository.deleteById(importOrderId);
     }
 

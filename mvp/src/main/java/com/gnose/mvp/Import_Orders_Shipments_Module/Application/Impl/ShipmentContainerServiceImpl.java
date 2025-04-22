@@ -32,6 +32,9 @@ public class ShipmentContainerServiceImpl implements IShipmentsContainerService 
 
     @Override
     public void deleteById(Long id) {
+        if (!shipmentContainersJpaRepository.existsById(id))
+            throw new RuntimeException("ShipContainer not found!");
+
         shipmentContainersJpaRepository.deleteById(id);
     }
 

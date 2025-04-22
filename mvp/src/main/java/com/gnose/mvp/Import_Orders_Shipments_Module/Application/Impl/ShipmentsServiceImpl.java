@@ -33,11 +33,15 @@ public class ShipmentsServiceImpl implements IShipmentsService {
 
     @Override
     public ShipmentsJpaEntity update(ShipmentsJpaEntity shipment) {
+        if (!shipmentJpaRepository.existsById(shipment.getId()))
+            throw new RuntimeException("Shipment not found!");
         return shipmentJpaRepository.save(shipment);
     }
 
     @Override
     public void deleteShipment(Long shipmentId) {
+        if (!shipmentJpaRepository.existsById(shipmentId))
+            throw new RuntimeException("Shipment not found!");
         shipmentJpaRepository.deleteById(shipmentId);
     }
 
