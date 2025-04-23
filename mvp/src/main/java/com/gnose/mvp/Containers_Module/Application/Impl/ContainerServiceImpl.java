@@ -60,8 +60,8 @@ public class ContainerServiceImpl implements IContainerService {
     }
 
     @Override
-    public List<ContainerJpaEntity> getByWeight(String weight) {
-        return containerJpaRepository.findByWeight(Integer.parseInt(weight))
+    public List<ContainerJpaEntity> getByWeight(Integer weight) {
+        return containerJpaRepository.findByWeight(weight)
                 .orElseThrow(() -> new RuntimeException("Container not found!"));
     }
 
