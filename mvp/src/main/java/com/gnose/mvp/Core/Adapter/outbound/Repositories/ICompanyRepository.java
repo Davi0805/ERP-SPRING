@@ -10,4 +10,7 @@ public interface ICompanyRepository {
     CompanyJpaEntity findByCnpj(String cnpj);
     CompanyJpaEntity findByName(String name);
     List<CompanyJpaEntity> findAll();
+    boolean existsById(Long id);
+    void updateCompany(CompanyJpaEntity company);
+    void deleteById(Long id);
 }

@@ -44,6 +44,29 @@ public class CompanyRepositoryAdapter implements ICompanyRepository {
     }
 
     @Override
+    public void updateCompany(CompanyJpaEntity company)
+    {
+        companyJpaRepository.save(company);
+    }
+
+    @Override
+    public boolean existsById(Long id)
+    {
+        return companyJpaRepository.existsById(id);
+    }
+
+
+    // todo: reimplement it in future with a custom query
+    // todo: that will check the company authorization
+    @Override
+    public void deleteById(Long id)
+    {
+        if (!companyJpaRepository.existsById(id))
+            throw new RuntimeException("Company not found!");
+        companyJpaRepository.deleteById(id);
+    }
+
+    @Override
     public List<CompanyJpaEntity> findAll() {
         return companyJpaRepository.findAll();
     }
