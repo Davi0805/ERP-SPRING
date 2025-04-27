@@ -13,4 +13,5 @@ public interface ContainerJpaRepository extends JpaRepository<ContainerJpaEntity
     Optional<List<ContainerJpaEntity>> findByType(String type);
     Optional<List<ContainerJpaEntity>> findByWeight(Integer weight);
     Optional<List<ContainerJpaEntity>> findByCompanyId(Long companyId);
+    Optional<ContainerJpaEntity> findByIdAndCompanyId(Long id, Long CompanyId);
 }

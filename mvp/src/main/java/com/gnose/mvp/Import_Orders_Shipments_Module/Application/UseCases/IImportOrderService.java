@@ -9,6 +9,6 @@ public interface IImportOrderService {
     ImportOrdersJpaEntity create(ImportOrdersJpaEntity importOrder);
     ImportOrdersJpaEntity update(ImportOrdersJpaEntity importOrder);
     void deleteImportOrder(Long importOrderId);
-    List<ImportOrdersJpaEntity> getAllByCompanyId();
-    List<ImportOrdersJpaEntity> getAllByCompanyIdAndStatus(String status);
+    List<ImportOrdersJpaEntity> getAllByCompanyId(Long companyId);
+    List<ImportOrdersJpaEntity> getAllByCompanyIdAndStatus(Long companyId, String status);
 }

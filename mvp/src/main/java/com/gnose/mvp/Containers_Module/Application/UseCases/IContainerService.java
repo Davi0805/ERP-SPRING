@@ -11,7 +11,7 @@ public interface IContainerService {
     ContainerJpaEntity getById(Long id);
     ContainerJpaEntity getByNumber(String containerNumber);
     List<ContainerJpaEntity> getByType(String type);
-    List<ContainerJpaEntity> getByWeight(String weight);
+    List<ContainerJpaEntity> getByWeight(Integer weight);
     //ContainerJpaEntity getBySize(String size);
     List<ContainerJpaEntity> getByCompanyId(Long companyId);
     List<ContainerJpaEntity> getAllContainers();

@@ -37,8 +37,15 @@ public class UserCompanyServiceImpl implements IUserCompanyService {
 
     @Override
     public void assignNewUserToCompany(Long companyId, Long userId, Long roleId) {
+        UserCompanyJpaEntity entity = new UserCompanyJpaEntity();
+        entity.setUserId(userId);
+        entity.setRoleId(roleId);
+        entity.setCompanyId(companyId);
 
+        jpaRepository.save(entity);
     }
+
+    // todo: implement methods
 
     @Override
     public void removeUserFromCompany(Long companyId, Long userId) {

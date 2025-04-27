@@ -91,7 +91,7 @@ public class ContainerController {
     }
 
     @GetMapping("/weight/{weight}")
-    public ResponseEntity<?> getContainerByWeight(@PathVariable String weight) {
+    public ResponseEntity<?> getContainerByWeight(@PathVariable Integer weight) {
         try {
             List<ContainerJpaEntity> container = containerService.getByWeight(weight);
             return ResponseEntity.ok(container);

@@ -11,4 +11,7 @@ public interface ICompanyRepository {
     CompanyJpaEntity findByName(String name);
     List<CompanyJpaEntity> findAll();
     List<CompanyJpaEntity> getCompaniesByCompanyIds(List<Long> companyIds);
+    boolean existsById(Long id);
+    void updateCompany(CompanyJpaEntity company);
+    void deleteById(Long id);
 }

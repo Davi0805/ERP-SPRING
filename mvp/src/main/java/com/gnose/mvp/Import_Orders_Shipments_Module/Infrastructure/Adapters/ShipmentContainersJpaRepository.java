@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface ShipmentContainersJpaRepository extends JpaRepository<ShipmentContainersJpaEntity, Long> {
-    List<ShipmentContainersJpaEntity> findByShipmentId(Long shipmentId);
-    List<ShipmentContainersJpaEntity> findByContainerId(Long containerId);
-    Optional<List<ShipmentContainersJpaEntity>> findByContainerIdAndShipmentId(Long containerId, Long shipmentId);
+    Optional<List<ShipmentContainersJpaEntity>> findByShipmentId(Long shipmentId);
+    Optional<ShipmentContainersJpaEntity> findByContainerId(Long containerId);
+    Optional<ShipmentContainersJpaEntity> findByContainerIdAndShipmentId(Long containerId, Long shipmentId);
 }

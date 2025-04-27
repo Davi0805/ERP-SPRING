@@ -37,11 +37,12 @@ public class CompanyServiceImpl implements ICompanyService {
         return companyRepository.createCompany(entity);
     }
 
-    // todo: implement this methods
-
     @Override
     public CompanyJpaEntity updateCompany(CompanyJpaEntity company) {
-        return null;
+        if (!companyRepository.existsById(company.getId()))
+            throw new RuntimeException("Company not found!");
+        companyRepository.updateCompany(company);
+        return company;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Override
     public void deleteCompany(Long companyId) {
-
+        companyRepository.deleteById(companyId);
     }
 
 }
