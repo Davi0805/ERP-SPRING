@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/login")
@@ -46,7 +47,7 @@ public class LoginController {
             String jwt = jwtServiceImpl.generateToken(user.getId());
             redisServiceImpl.saveSession(jwt, permissions);
 
-            return ResponseEntity.ok(jwt);
+            return ResponseEntity.ok(Map.of("token", jwt));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

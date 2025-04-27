@@ -47,4 +47,10 @@ public class CompanyRepositoryAdapter implements ICompanyRepository {
     public List<CompanyJpaEntity> findAll() {
         return companyJpaRepository.findAll();
     }
+
+    @Override
+    public List<CompanyJpaEntity> getCompaniesByCompanyIds(List<Long> companyIds) {
+        return companyJpaRepository.findByIdIn(companyIds)
+                .orElseThrow(() -> new RuntimeException("Companies not found!"));
+    }
 }

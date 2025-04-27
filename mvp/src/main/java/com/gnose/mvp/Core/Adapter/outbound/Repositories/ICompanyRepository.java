@@ -10,4 +10,5 @@ public interface ICompanyRepository {
     CompanyJpaEntity findByCnpj(String cnpj);
     CompanyJpaEntity findByName(String name);
     List<CompanyJpaEntity> findAll();
+    List<CompanyJpaEntity> getCompaniesByCompanyIds(List<Long> companyIds);
 }

@@ -45,6 +45,11 @@ public class CompanyServiceImpl implements ICompanyService {
     }
 
     @Override
+    public List<CompanyJpaEntity> getCompaniesByCompanyIds(List<Long> companyIds) {
+        return companyRepository.getCompaniesByCompanyIds(companyIds);
+    }
+
+    @Override
     public void deleteCompany(Long companyId) {
 
     }

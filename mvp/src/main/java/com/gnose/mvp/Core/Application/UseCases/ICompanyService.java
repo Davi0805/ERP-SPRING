@@ -10,5 +10,6 @@ public interface ICompanyService {
     CompanyJpaEntity findById(Long id);
     CompanyJpaEntity createCompany(CreateCompanyDTO company);
     CompanyJpaEntity updateCompany(CompanyJpaEntity company);
+    List<CompanyJpaEntity> getCompaniesByCompanyIds(List<Long> companyIds);
     void deleteCompany(Long companyId);
 }
