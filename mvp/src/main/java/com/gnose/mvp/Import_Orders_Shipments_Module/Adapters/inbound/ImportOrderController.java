@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/import_order")
 public class ImportOrderController {
@@ -20,10 +22,16 @@ public class ImportOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ImportOrdersJpaEntity importOrders)
+    public ResponseEntity<?> create(@RequestBody ImportOrderDTO importOrders)
     {
         try {
-            importOrderService.create(importOrders);
+            ImportOrdersJpaEntity entity = new ImportOrdersJpaEntity();
+            entity.setCompanyId(importOrders.getCompanyId());
+            entity.setStatus(importOrders.getStatus());
+            entity.setOrderNumber(UUID.randomUUID());
+
+
+            importOrderService.create(entity);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
