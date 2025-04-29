@@ -56,4 +56,9 @@ public class ShipmentsServiceImpl implements IShipmentsService {
         return shipmentJpaRepository.findByImportOrderId(importOrderId)
                 .orElseThrow(() -> new RuntimeException("Shipment not found!"));
     }
+
+    @Override
+    public List<ShipmentsJpaEntity> getAll() {
+        return shipmentJpaRepository.findAll();
+    }
 }

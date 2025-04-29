@@ -12,4 +12,5 @@ public interface IShipmentsService {
     void deleteShipment(Long shipmentId);
     List<ShipmentsJpaEntity> getByShipId(Long shipId);
     List<ShipmentsJpaEntity> getByImportOrderId(Long importOrderId);
+    List<ShipmentsJpaEntity> getAll();
 }

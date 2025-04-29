@@ -30,6 +30,17 @@ public class ShipmentsController {
         }
     }
 
+    // debug - comment or remove befor prod
+    @GetMapping
+    public ResponseEntity<?> getAll()
+    {
+        try {
+            return ResponseEntity.ok(shipmentsService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id)
     {
