@@ -1,5 +1,6 @@
 package com.gnose.mvp.Notifications_Module.Infrastructure.Entities;
 
+import com.gnose.mvp.Notifications_Module.Adapters.DTO.NotificationDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,10 +19,12 @@ import java.time.LocalDateTime;
 public class NotificationJpaEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long companyId;
 
+    // maybe replace by enum
     private String service;
 
     private String message;
@@ -31,4 +34,16 @@ public class NotificationJpaEntity {
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    public NotificationDTO toDTO()
+    {
+        NotificationDTO dto = new NotificationDTO();
+        dto.setService(this.service);
+        dto.setMessage(this.message);
+        dto.setSeverity(this.severity);
+        dto.setCompanyId(this.companyId);
+
+        return dto;
+    }
+
 }

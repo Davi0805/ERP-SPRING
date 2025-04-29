@@ -13,4 +13,6 @@ public interface NotificationJpaRepository extends JpaRepository<NotificationJpa
     Optional<List<NotificationJpaEntity>> findByCompanyIdInOrderByCreatedAtDesc(List<Long> companyId);
     Optional<List<NotificationJpaEntity>> findByCompanyIdInAndSeverityOrderByCreatedAtDesc(List<Long> companyId, SeverityStatus severity);
 
+    // todo: later add a custom query that will make a join to check if user already read or not the notification.
+    // todo: idk if left join will create too much overhead, something to search later
 }

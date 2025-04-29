@@ -7,10 +7,7 @@ import com.gnose.mvp.Notifications_Module.Adapters.outbound.NotificationJpaRepos
 import com.gnose.mvp.Notifications_Module.Infrastructure.Entities.NotificationJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +23,15 @@ public class NotificationController {
 
     @Autowired
     public NotificationController(NotificationJpaRepository jpa,
-                                  RedisServiceImpl redis)
-    {
+                                  RedisServiceImpl redis) {
         this.jpaRepository = jpa;
         this.redisService = redis;
+    }
+
+    @PostMapping
+    public ResponseEntity<?> notificationTest()
+    {
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -37,6 +39,9 @@ public class NotificationController {
     {
         try {
             SessionRedisDTO session = redisService.getSession(token.replace("Bearer ", ""));
+
+            // todo: refac
+
             List<Long> companies = new ArrayList<>();
 
             for (CompanyPermissionDTO dto : session.getCompanyPermission())
