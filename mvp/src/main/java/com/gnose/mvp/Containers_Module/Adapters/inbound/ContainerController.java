@@ -1,7 +1,10 @@
 package com.gnose.mvp.Containers_Module.Adapters.inbound;
 
+import com.gnose.mvp.Authorization.AuthorizationBaseController;
+import com.gnose.mvp.Authorization.CheckAccess;
 import com.gnose.mvp.Containers_Module.Application.UseCases.IContainerService;
 import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntity;
+import com.gnose.mvp.Core.Adapter.outbound.DTO.CompanyPermissionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/containers")
-public class ContainerController {
+public class ContainerController extends AuthorizationBaseController {
 
     private final IContainerService containerService;
 
@@ -19,95 +22,68 @@ public class ContainerController {
         this.containerService = containerService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllContainers() {
-        try {
-            List<ContainerJpaEntity> containers = containerService.getAllContainers();
-            return ResponseEntity.ok(containers);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
     @PostMapping
+    @CheckAccess(permission = "CREATE_CONTAINER", companyId = "#companyId")
     public ResponseEntity<?> createContainer(@RequestBody ContainerJpaEntity container) {
-        try {
-            // it dont check the companyId cause it trusts the redis session permission
-            containerService.createContainer(container);
-            return ResponseEntity.ok("Container created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        containerService.createContainer(container);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
+    @CheckAccess(permission = "UPDATE_CONTAINER", companyId = "#companyId")
     public ResponseEntity<?> updateContainer(@PathVariable Long id , @RequestBody ContainerJpaEntity container) {
-        try {
-            containerService.updateContainer(container);
-            return ResponseEntity.ok("Container updated successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        container.setId(id);
+        containerService.updateContainer(container);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
+    @CheckAccess(permission = "DELETE_CONTAINER", companyId = "*")
     public ResponseEntity<?> deleteContainer(@PathVariable Long id) {
-        try {
-            containerService.deleteContainer(id);
-            return ResponseEntity.ok("Container deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        containerService.deleteContainer(id, getAuthorizedCompanyIds());
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
+    public ResponseEntity<?> getAllContainers() {
+        List<ContainerJpaEntity> containers = containerService.getAllContainers(getAuthorizedCompanyIds());
+        return ResponseEntity.ok(containers);
     }
 
     @GetMapping("/{id}")
+    @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerById(@PathVariable Long id) {
-        try {
-            ContainerJpaEntity container = containerService.getById(id);
+            ContainerJpaEntity container = containerService.getById(id, getAuthorizedCompanyIds());
             return ResponseEntity.ok(container);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/number/{containerNumber}")
+    @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerByNumber(@PathVariable String containerNumber) {
-        try {
-            ContainerJpaEntity container = containerService.getByNumber(containerNumber);
+            ContainerJpaEntity container = containerService.getByNumber(containerNumber, getAuthorizedCompanyIds());
             return ResponseEntity.ok(container);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/type/{type}")
+    @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerByType(@PathVariable String type) {
-        try {
-            List<ContainerJpaEntity> container = containerService.getByType(type);
+            List<ContainerJpaEntity> container = containerService.getByType(type, getAuthorizedCompanyIds());
             return ResponseEntity.ok(container);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/weight/{weight}")
+    @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerByWeight(@PathVariable Integer weight) {
-        try {
-            List<ContainerJpaEntity> container = containerService.getByWeight(weight);
+            List<ContainerJpaEntity> container = containerService.getByWeight(weight, getAuthorizedCompanyIds());
             return ResponseEntity.ok(container);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/company/{companyId}")
+    @CheckAccess(permission = "VIEW_CONTAINER", companyId = "companyId")
     public ResponseEntity<?> getContainerByCompanyId(@PathVariable Long companyId) {
-        try {
             List<ContainerJpaEntity> container = containerService.getByCompanyId(companyId);
             return ResponseEntity.ok(container);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
 }
