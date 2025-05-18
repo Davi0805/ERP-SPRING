@@ -19,6 +19,12 @@ public abstract class AuthorizationBaseController {
         return (List<CompanyPermissionDTO>) request.getAttribute("authorizedCompanies");
     }
 
+    protected List<Long> getAuthorizedCompanyIds() {
+        return getAuthorizedCompanies().stream()
+                .map(CompanyPermissionDTO::getCompanyId)
+                .toList();
+    }
+
     protected Long getCompanyId() {
         return (Long) request.getAttribute("companyId");
     }

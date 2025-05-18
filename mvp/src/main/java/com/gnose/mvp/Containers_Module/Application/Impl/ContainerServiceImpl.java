@@ -3,6 +3,7 @@ package com.gnose.mvp.Containers_Module.Application.Impl;
 import com.gnose.mvp.Containers_Module.Application.UseCases.IContainerService;
 import com.gnose.mvp.Containers_Module.Infrastructure.Adapters.ContainerJpaRepository;
 import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntity;
+import com.gnose.mvp.Exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -26,43 +27,50 @@ public class ContainerServiceImpl implements IContainerService {
     @Override
     public void updateContainer(ContainerJpaEntity containerJpaEntity) {
         if (!containerJpaRepository.existsById(containerJpaEntity.getId())) {
-            throw new RuntimeException("Container not found!");
+            throw new NotFoundException("Container not found!");
         }
         containerJpaRepository.save(containerJpaEntity);
     }
 
     @Override
-    public void deleteContainer(Long id) {
-        if (!containerJpaRepository.existsById(id)) {
-            throw new RuntimeException("Container not found!");
+    public void deleteContainer(Long id, List<Long> companyIds) {
+        if (!containerJpaRepository.existsByIdAndCompanyIdIn(id, companyIds)) {
+            throw new NotFoundException("Container not found!");
         }
         containerJpaRepository.deleteById(id);
     }
 
     @Override
-    public ContainerJpaEntity getById(Long id) {
-        return containerJpaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Container not found!"));
+    public ContainerJpaEntity getById(Long id, List<Long> companyIds) {
+        ContainerJpaEntity container = containerJpaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Container not found!"));
+
+        if (!companyIds.contains(container.getCompanyId())) {
+            throw new NotFoundException("Container not found!");
+        }
+
+        return container;
     }
 
 
-    // todo: Implement the following methods
     @Override
-    public ContainerJpaEntity getByNumber(String containerNumber) {
-        return containerJpaRepository.findByContainerNumber(containerNumber)
-                .orElseThrow(() -> new RuntimeException("Container not found!"));
+    public ContainerJpaEntity getByNumber(String containerNumber, List<Long> companyIds) {
+        ContainerJpaEntity container = containerJpaRepository.findByContainerNumberAndCompanyIdIn(containerNumber, companyIds)
+                .orElseThrow(() -> new NotFoundException("Container not found!"));
+
+        return container;
     }
 
     @Override
-    public List<ContainerJpaEntity> getByType(String type) {
-        return containerJpaRepository.findByType(type)
-                .orElseThrow(() -> new RuntimeException("Container not found!"));
+    public List<ContainerJpaEntity> getByType(String type, List<Long> companyIds) {
+        return containerJpaRepository.findByTypeAndCompanyIdIn(type, companyIds)
+                .orElseThrow(() -> new NotFoundException("Container not found!"));
     }
 
     @Override
-    public List<ContainerJpaEntity> getByWeight(Integer weight) {
-        return containerJpaRepository.findByWeight(weight)
-                .orElseThrow(() -> new RuntimeException("Container not found!"));
+    public List<ContainerJpaEntity> getByWeight(Integer weight, List<Long> companyIds) {
+        return containerJpaRepository.findByWeightAndCompanyIdIn(weight, companyIds)
+                .orElseThrow(() -> new NotFoundException("Container not found!"));
     }
 
     @Override
@@ -72,7 +80,8 @@ public class ContainerServiceImpl implements IContainerService {
     }
 
     @Override
-    public List<ContainerJpaEntity> getAllContainers() {
-        return containerJpaRepository.findAll();
+    public List<ContainerJpaEntity> getAllContainers(List<Long> companyIds) {
+        return containerJpaRepository.findByCompanyIdIn(companyIds)
+                .orElseThrow(() -> new NotFoundException("Container not found!"));
     }
 }
