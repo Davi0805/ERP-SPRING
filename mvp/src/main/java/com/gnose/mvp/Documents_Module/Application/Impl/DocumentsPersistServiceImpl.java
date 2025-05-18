@@ -7,6 +7,7 @@ import com.gnose.mvp.Documents_Module.Infrastructure.DocumentsJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class DocumentsPersistServiceImpl implements IDocumentPersistService {
 
     @Override
     public UUID saveDocument(String description, Long importOrderId, Long companyId, DocumentType type, String fileType) {
-        return documentJpaRepository.save(new DocumentsJpaEntity(null, companyId, importOrderId, description, type, fileType)).getId();
+        return documentJpaRepository.save(new DocumentsJpaEntity(null, companyId, importOrderId, description, type, fileType, LocalDateTime.now())).getId();
     }
 
     @Override
