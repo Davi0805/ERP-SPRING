@@ -14,6 +14,7 @@ public interface ContainerJpaRepository extends JpaRepository<ContainerJpaEntity
     Optional<List<ContainerJpaEntity>> findByWeightAndCompanyIdIn(Integer weight, List<Long> companyIds);
     Optional<List<ContainerJpaEntity>> findByCompanyId(Long companyId);
     Optional<ContainerJpaEntity> findByIdAndCompanyId(Long id, Long CompanyId);
+    Optional<ContainerJpaEntity> findByIdAndCompanyIdIn(Long id, List<Long> companyIds);
     Optional<List<ContainerJpaEntity>> findByCompanyIdIn(List<Long> companyIds);
     Boolean existsByIdAndCompanyIdIn(Long id, List<Long> companyIds);
 }

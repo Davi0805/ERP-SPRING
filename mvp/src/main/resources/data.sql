@@ -24,8 +24,10 @@ INSERT INTO permissions (code, description) VALUES
 
 INSERT INTO permissions (code, description) VALUES
     ('CREATE_CONTAINER', 'Permission to create containers'),
+    ('CREATE_CONTAINER_MOVEMENT', 'Permission to create containers movements'),
     ('UPDATE_CONTAINER', 'Permission to update containers'),
     ('VIEW_CONTAINER', 'Permission to view containers'),
+    ('VIEW_CONTAINER_MOVEMENTS', 'Permission to view containers movements'),
     ('DELETE_CONTAINER', 'Permission to delete containers');
 
 INSERT INTO permissions (code, description) VALUES

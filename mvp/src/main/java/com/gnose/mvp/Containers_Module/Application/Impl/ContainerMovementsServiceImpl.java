@@ -3,10 +3,13 @@ package com.gnose.mvp.Containers_Module.Application.Impl;
 import com.gnose.mvp.Containers_Module.Application.UseCases.IContainerMovementService;
 import com.gnose.mvp.Containers_Module.Infrastructure.Adapters.ContainerJpaRepository;
 import com.gnose.mvp.Containers_Module.Infrastructure.Adapters.ContainerMovementsJpaRepository;
+import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntity;
 import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerMovementsJpaEntity;
+import com.gnose.mvp.Exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,10 +26,18 @@ public class ContainerMovementsServiceImpl implements IContainerMovementService 
     }
 
     @Override
-    public ContainerMovementsJpaEntity createContainerMovement(ContainerMovementsJpaEntity containerMovementsJpaEntity) {
-        if (!containerJpaRepository.existsById(containerMovementsJpaEntity.getContainerId())) {
-            throw new RuntimeException("Container not found!");
+    public ContainerMovementsJpaEntity createContainerMovement(ContainerMovementsJpaEntity containerMovementsJpaEntity,
+                                                               List<Long> companyIds) {
+
+        ContainerJpaEntity container = containerJpaRepository.findById(containerMovementsJpaEntity.getContainerId())
+                .orElseThrow(() -> new NotFoundException("Container not found!"));
+
+        if (!companyIds.contains(container.getCompanyId())) {
+            throw new NotFoundException("Container not found!");
         }
+
+        containerMovementsJpaEntity.setMovement_date(LocalDateTime.now());
+
         return containerMovementsJpaRepository.save(containerMovementsJpaEntity);
     }
 
@@ -53,8 +64,16 @@ public class ContainerMovementsServiceImpl implements IContainerMovementService 
     }
 
     @Override
-    public List<ContainerMovementsJpaEntity> getByContainerId(Long containerId) {
-        return containerMovementsJpaRepository.findAllByContainerId(containerId);
+    public List<ContainerMovementsJpaEntity> getByContainerId(Long containerId, List<Long> companyIds) {
+        ContainerJpaEntity container = containerJpaRepository.findByIdAndCompanyIdIn(containerId, companyIds).orElseThrow(
+                () -> new NotFoundException("Container not found!"));
+
+        if (!companyIds.contains(container.getCompanyId()))
+            throw new NotFoundException("Container not found!");
+
+        List<ContainerMovementsJpaEntity> containerMovements = containerMovementsJpaRepository.findAllByContainerId(containerId);
+
+        return containerMovements;
     }
 
     @Override
