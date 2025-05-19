@@ -3,6 +3,7 @@ package com.gnose.mvp.Documents_Module.Application;
 import com.gnose.mvp.Documents_Module.Infrastructure.DocumentType;
 import com.gnose.mvp.Documents_Module.Infrastructure.DocumentsJpaEntity;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,8 @@ public interface IDocumentPersistService {
     void deleteDocument(String fileName, String filePath);
 
     List<DocumentsJpaEntity> listDocumentsByImportOrderId(Long importOrderId);
+
+    List<DocumentsJpaEntity> listDocumentsByImportOrderAndCompanyIdIn(Long importOrderId, List<Long> companyIds);
 
     List<DocumentsJpaEntity> listDocumentsByCompanyIdAndType(Long companyId, DocumentType type);
 

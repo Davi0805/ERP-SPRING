@@ -13,5 +13,6 @@ import java.util.UUID;
 @Repository
 public interface DocumentJpaRepository extends JpaRepository<DocumentsJpaEntity, UUID> {
     Optional<List<DocumentsJpaEntity>> findByImportOrderId(Long importOrderId);
+    Optional<List<DocumentsJpaEntity>> findByImportOrderIdAndCompanyIdIn(Long importOrderId, List<Long> companyIds);
     Optional<List<DocumentsJpaEntity>> findByCompanyIdAndType(Long companyId, DocumentType type);
 }

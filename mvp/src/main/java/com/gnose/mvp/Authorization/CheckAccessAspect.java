@@ -116,6 +116,9 @@ public class CheckAccessAspect {
             if (arg instanceof ContainerJpaEntity) {
                 ContainerJpaEntity container = (ContainerJpaEntity) arg;
                 return container.getCompanyId();
+            } else if (arg instanceof DocumentDTO) {
+                DocumentDTO dto = (DocumentDTO) arg;
+                return dto.getCompanyId();
             } else if (arg instanceof ImportOrderDTO) {
                 ImportOrderDTO dto = (ImportOrderDTO) arg;
                 return dto.getCompanyId();

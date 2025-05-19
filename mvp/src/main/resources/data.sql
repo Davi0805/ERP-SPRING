@@ -31,6 +31,23 @@ INSERT INTO permissions (code, description) VALUES
     ('DELETE_CONTAINER', 'Permission to delete containers');
 
 INSERT INTO permissions (code, description) VALUES
+    ('VIEW_PORT', 'Permission to view ports'),
+    ('CREATE_PORT', 'Permission to create ports'),
+    ('UPDATE_PORT', 'Permission to update ports'),
+    ('DELETE_PORT', 'Permission to delete ports'),
+    ('VIEW_SHIPS', 'Permission to view ships'),
+    ('CREATE_SHIPS', 'Permission to create ships'),
+    ('UPDATE_SHIPS', 'Permission to update ships'),
+    ('DELETE_SHIPS', 'Permission to delete ships');
+
+INSERT INTO permissions (code, description) VALUES
+    ('UPLOAD_DOCUMENT', 'Permission to upload documents'),
+    ('DOWNLOAD_DOCUMENT', 'Permission to download documents'),
+    ('VIEW_LIST_OF_DOCUMENT', 'Permission to view list of documents'),
+    ('DELETE_DOCUMENT', 'Permission to delete documents');
+
+
+INSERT INTO permissions (code, description) VALUES
     ('VIEW_INVOICES', 'Permission to view invoices'),
     ('APPROVE_PAYMENTS', 'Permission to approve payments'),
     ('EXPORT_FINANCIAL_REPORTS', 'Permission to export financial reports');
