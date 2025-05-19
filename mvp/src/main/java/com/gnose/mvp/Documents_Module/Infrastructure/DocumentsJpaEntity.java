@@ -1,5 +1,6 @@
 package com.gnose.mvp.Documents_Module.Infrastructure;
 
+import com.gnose.mvp.Documents_Module.Adapter.DTO.DocumentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +34,13 @@ public class DocumentsJpaEntity {
     private String fileType;
 
     private LocalDateTime createdAt;
+
+    public DocumentsJpaEntity(DocumentDTO dto) {
+        this.companyId = dto.getCompanyId();
+        this.importOrderId = dto.getImportOrderId();
+        this.description = dto.getDescription();
+        this.type = dto.getType();
+        this.fileType = dto.getFileType();
+        this.createdAt = LocalDateTime.now();
+    }
 }

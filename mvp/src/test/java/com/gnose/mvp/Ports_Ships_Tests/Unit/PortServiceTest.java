@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Tests.Unit;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.PortInputDTO;
 import com.gnose.mvp.Ports_Ships_Module.Application.Impl.PortServiceImpl;
 import com.gnose.mvp.Ports_Ships_Module.Application.UseCases.IPortsService;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Adapters.Repositories.PortJpaRepository;
@@ -73,10 +74,7 @@ public class PortServiceTest {
     @Test
     public void updatePortShouldThrow() {
         assertThrows(RuntimeException.class, () -> portsService
-                .updatePort(3L,
-                        "Mock Name 3",
-                        "Brasil",
-                        "BLABLABLA"));
+                .updatePort(new PortInputDTO(), 1L));
     }
 
     // Sucess ones
@@ -178,7 +176,7 @@ public class PortServiceTest {
 
         when(portJpaRepository.findById(1L)).thenReturn(Optional.of(port1));
 
-        portsService.updatePort(1L, "NAME MOCK2", "China", "41DAPT");
+        portsService.updatePort(new PortInputDTO("NAME MOCK2", "China", "41DAPT"), 1L);
 
         // need to change the interface and impl to receive a entity
 

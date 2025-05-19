@@ -1,5 +1,6 @@
 package com.gnose.mvp.Documents_Module.Application;
 
+import com.gnose.mvp.Documents_Module.Adapter.DTO.DocumentDTO;
 import com.gnose.mvp.Documents_Module.Infrastructure.DocumentType;
 import com.gnose.mvp.Documents_Module.Infrastructure.DocumentsJpaEntity;
 
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IDocumentPersistService {
-    UUID saveDocument(String description, Long importOrderId, Long companyId, DocumentType type, String fileType);
+    UUID saveDocument(DocumentDTO documentDTO);
 
     void deleteDocument(String fileName, String filePath);
 

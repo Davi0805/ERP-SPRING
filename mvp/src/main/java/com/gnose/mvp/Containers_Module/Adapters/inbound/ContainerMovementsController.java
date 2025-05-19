@@ -29,16 +29,15 @@ public class ContainerMovementsController extends AuthorizationBaseController {
     @PostMapping
     @CheckAccess(permission = "CREATE_CONTAINER_MOVEMENT", companyId = "*")
     public ResponseEntity<?> registerContainerMovement(@RequestBody ContainerMovementsJpaEntity container) {
-            if (!portEventService.portIdExists(container.getPortId()))
-                throw new NotFoundException("Port ID does not exist");
-            containerMovementService.createContainerMovement(container, getAuthorizedCompanyIds());
-            return ResponseEntity.ok().build();
+        if (!portEventService.portIdExists(container.getPortId())) throw new NotFoundException("Port ID does not exist");
+        containerMovementService.createContainerMovement(container, getAuthorizedCompanyIds());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{containerId}")
     @CheckAccess(permission = "VIEW_CONTAINER_MOVEMENTS", companyId = "*")
     public ResponseEntity<?> getContainerMovementsByContainerId(@PathVariable Long containerId) {
-            return ResponseEntity.ok(containerMovementService.getByContainerId(containerId, getAuthorizedCompanyIds()));
+        return ResponseEntity.ok(containerMovementService.getByContainerId(containerId, getAuthorizedCompanyIds()));
     }
 
 

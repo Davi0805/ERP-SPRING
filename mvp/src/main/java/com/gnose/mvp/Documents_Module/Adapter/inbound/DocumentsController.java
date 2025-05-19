@@ -11,6 +11,7 @@ import com.gnose.mvp.Documents_Module.Application.IDocumentPersistService;
 import com.gnose.mvp.Documents_Module.Application.IDocumentsBlobService;
 import com.gnose.mvp.Documents_Module.Application.IImportOrderEventService;
 import com.gnose.mvp.Documents_Module.Infrastructure.DocumentsJpaEntity;
+import com.gnose.mvp.Exceptions.BadRequestException;
 import com.gnose.mvp.Exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,24 +42,18 @@ public class DocumentsController extends AuthorizationBaseController {
     @PostMapping("/generate-upload-url")
     @CheckAccess(permission = "UPLOAD_DOCUMENT", companyId = "#companyId")
     public ResponseEntity<?> generateUploadUrl(@RequestBody DocumentDTO req) {
-//            if (!importOrderEventService.isImportOrderValid(req.getImportOrderId(), req.getCompanyId()))
-//                throw new RuntimeException("import order not valid");
-            UUID id = documentPersistService.saveDocument(req.getDescription(),
-                    req.getImportOrderId(), req.getCompanyId(),
-                    req.getType(),
-                    req.getFileType());
-            String url = blobService.getDocumentBlobUrl(id.toString()
-                                                        + "." + req.getFileType());
-            return ResponseEntity.ok(Map.of("url", url));
+        if (!importOrderEventService.isImportOrderValid(req)) throw new BadRequestException("import order not valid");
+        UUID id = documentPersistService.saveDocument(req);
+        String url = blobService.getDocumentBlobUrl(id.toString() + "." + req.getFileType());
+        return ResponseEntity.ok(Map.of("url", url));
     }
 
     @GetMapping("/generate-download-url")
     @CheckAccess(permission = "DOWNLOAD_DOCUMENT", companyId = "*")
     public ResponseEntity<?> generateDownloadUrl(@RequestParam String id) {
-            DocumentsJpaEntity entity = documentPersistService.findDocumentById(UUID.fromString(id));
-            if (!getAuthorizedCompanyIds().contains(entity.getCompanyId()))
-                throw new UnauthorizedException("Unauthorized to access this document");
-            return ResponseEntity.ok(Map.of("url", blobService.createDocumentBlob(id + "." + entity.getFileType())));
+        DocumentsJpaEntity entity = documentPersistService.findDocumentById(UUID.fromString(id));
+        if (!getAuthorizedCompanyIds().contains(entity.getCompanyId())) throw new UnauthorizedException("Unauthorized to access this document");
+        return ResponseEntity.ok(Map.of("url", blobService.createDocumentBlob(id + "." + entity.getFileType())));
     }
 
     @GetMapping("/list/{importOrderId}")

@@ -1,13 +1,14 @@
 package com.gnose.mvp.Ports_Ships_Module.Application.UseCases;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.PortInputDTO;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.PortJpaEntity;
 
 import java.util.List;
 
 public interface IPortsService {
-    PortJpaEntity createPort(String name, String country, String code);
+    PortJpaEntity createPort(PortInputDTO dto);
 
-    void updatePort(Long id, String name, String country, String code);
+    void updatePort(PortInputDTO dto, Long id);
 
     void deletePort(Long id);
 

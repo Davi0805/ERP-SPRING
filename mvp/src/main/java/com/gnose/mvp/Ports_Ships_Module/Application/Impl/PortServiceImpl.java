@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Module.Application.Impl;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.PortInputDTO;
 import com.gnose.mvp.Ports_Ships_Module.Application.UseCases.IPortsService;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Adapters.Repositories.PortJpaRepository;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.PortJpaEntity;
@@ -17,20 +18,17 @@ public class PortServiceImpl implements IPortsService {
     }
 
     @Override
-    public PortJpaEntity createPort(String name, String country, String code) {
-        PortJpaEntity port = new PortJpaEntity();
-        port.setName(name);
-        port.setCountry(country);
-        port.setCode(code);
+    public PortJpaEntity createPort(PortInputDTO dto) {
+        PortJpaEntity port = new PortJpaEntity(dto);
         return jpaRepository.save(port);
     }
 
     @Override
-    public void updatePort(Long id, String name, String country, String code) {
+    public void updatePort(PortInputDTO dto, Long id) {
         PortJpaEntity port = jpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Port not found!"));
-        port.setName(name);
-        port.setCountry(country);
-        port.setCode(code);
+        port.setName(dto.getName());
+        port.setCountry(dto.getCountry());
+        port.setCode(dto.getCode());
         jpaRepository.save(port);
     }
 

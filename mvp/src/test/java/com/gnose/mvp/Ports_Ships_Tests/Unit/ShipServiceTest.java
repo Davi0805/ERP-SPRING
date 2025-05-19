@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Tests.Unit;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.ShipInDTO;
 import com.gnose.mvp.Ports_Ships_Module.Application.Impl.ShipServiceImpl;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Adapters.Repositories.ShipsJpaRepository;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.ShipsJpaEntity;
@@ -47,8 +48,7 @@ public class ShipServiceTest {
     @Test
     public void updateShouldThrow()
     {
-        assertThrows(RuntimeException.class, () -> shipService.updateShip(1L, "blabla",
-                                                                            "blablabla", 456));
+        assertThrows(RuntimeException.class, () -> shipService.updateShip(new ShipInDTO(), 1L));
     }
 
     // Success ones
@@ -134,7 +134,7 @@ public class ShipServiceTest {
 
         when(shipsJpaRepository.findById(1L)).thenReturn(Optional.of(entity));
 
-        shipService.updateShip(1L, "BLABLA", "IMO1234", 46465);
+        shipService.updateShip(new ShipInDTO(), 1L);
 
         verify(shipsJpaRepository, times(1)).save(entity);
     }

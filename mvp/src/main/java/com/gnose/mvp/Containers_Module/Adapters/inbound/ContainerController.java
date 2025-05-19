@@ -54,36 +54,36 @@ public class ContainerController extends AuthorizationBaseController {
     @GetMapping("/{id}")
     @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerById(@PathVariable Long id) {
-            ContainerJpaEntity container = containerService.getById(id, getAuthorizedCompanyIds());
-            return ResponseEntity.ok(container);
+        ContainerJpaEntity container = containerService.getById(id, getAuthorizedCompanyIds());
+        return ResponseEntity.ok(container);
     }
 
     @GetMapping("/number/{containerNumber}")
     @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerByNumber(@PathVariable String containerNumber) {
-            ContainerJpaEntity container = containerService.getByNumber(containerNumber, getAuthorizedCompanyIds());
-            return ResponseEntity.ok(container);
+        ContainerJpaEntity container = containerService.getByNumber(containerNumber, getAuthorizedCompanyIds());
+        return ResponseEntity.ok(container);
     }
 
     @GetMapping("/type/{type}")
     @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerByType(@PathVariable String type) {
-            List<ContainerJpaEntity> container = containerService.getByType(type, getAuthorizedCompanyIds());
-            return ResponseEntity.ok(container);
+        List<ContainerJpaEntity> container = containerService.getByType(type, getAuthorizedCompanyIds());
+        return ResponseEntity.ok(container);
     }
 
     @GetMapping("/weight/{weight}")
     @CheckAccess(permission = "VIEW_CONTAINER", companyId = "*")
     public ResponseEntity<?> getContainerByWeight(@PathVariable Integer weight) {
-            List<ContainerJpaEntity> container = containerService.getByWeight(weight, getAuthorizedCompanyIds());
-            return ResponseEntity.ok(container);
+        List<ContainerJpaEntity> container = containerService.getByWeight(weight, getAuthorizedCompanyIds());
+        return ResponseEntity.ok(container);
     }
 
     @GetMapping("/company/{companyId}")
     @CheckAccess(permission = "VIEW_CONTAINER", companyId = "companyId")
     public ResponseEntity<?> getContainerByCompanyId(@PathVariable Long companyId) {
-            List<ContainerJpaEntity> container = containerService.getByCompanyId(companyId);
-            return ResponseEntity.ok(container);
+        List<ContainerJpaEntity> container = containerService.getByCompanyId(companyId);
+        return ResponseEntity.ok(container);
     }
 
 }

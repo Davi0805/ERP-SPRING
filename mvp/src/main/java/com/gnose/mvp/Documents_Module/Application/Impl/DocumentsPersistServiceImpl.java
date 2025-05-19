@@ -1,5 +1,6 @@
 package com.gnose.mvp.Documents_Module.Application.Impl;
 
+import com.gnose.mvp.Documents_Module.Adapter.DTO.DocumentDTO;
 import com.gnose.mvp.Documents_Module.Adapter.outbound.DocumentJpaRepository;
 import com.gnose.mvp.Documents_Module.Application.IDocumentPersistService;
 import com.gnose.mvp.Documents_Module.Infrastructure.DocumentType;
@@ -23,8 +24,8 @@ public class DocumentsPersistServiceImpl implements IDocumentPersistService {
     }
 
     @Override
-    public UUID saveDocument(String description, Long importOrderId, Long companyId, DocumentType type, String fileType) {
-        return documentJpaRepository.save(new DocumentsJpaEntity(null, companyId, importOrderId, description, type, fileType, LocalDateTime.now())).getId();
+    public UUID saveDocument(DocumentDTO dto) {
+        return documentJpaRepository.save(new DocumentsJpaEntity(dto)).getId();
     }
 
     @Override

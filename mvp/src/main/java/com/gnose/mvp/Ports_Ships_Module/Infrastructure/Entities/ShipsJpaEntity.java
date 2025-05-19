@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.ShipInDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +25,10 @@ public class ShipsJpaEntity {
     private String imo; // international ship unique identifier
 
     private Integer capacity; // in TEU (Twenty-foot Equivalent Unit)
+
+    public ShipsJpaEntity(ShipInDTO dto) {
+        this.name = dto.getName();
+        this.imo = dto.getImo();
+        this.capacity = dto.getCapacity();
+    }
 }

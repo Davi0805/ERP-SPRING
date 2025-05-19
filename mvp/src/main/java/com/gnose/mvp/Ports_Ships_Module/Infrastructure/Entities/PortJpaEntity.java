@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.PortInputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +26,10 @@ public class PortJpaEntity {
 
     @Column(unique = true)
     private String code;
+
+    public PortJpaEntity(PortInputDTO dto) {
+        this.name = dto.getName();
+        this.country = dto.getCountry();
+        this.code = dto.getCode();
+    }
 }

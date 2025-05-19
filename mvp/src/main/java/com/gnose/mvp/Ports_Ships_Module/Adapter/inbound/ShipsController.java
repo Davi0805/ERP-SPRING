@@ -1,6 +1,7 @@
 package com.gnose.mvp.Ports_Ships_Module.Adapter.inbound;
 
 import com.gnose.mvp.Authorization.CheckAccess;
+import com.gnose.mvp.Ports_Ships_Module.Adapter.ShipInDTO;
 import com.gnose.mvp.Ports_Ships_Module.Application.UseCases.IShipService;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.ShipsJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,40 +21,40 @@ public class ShipsController {
 
     @PostMapping
     @CheckAccess(permission = "CREATE_SHIPS", companyId = "*")
-    public ResponseEntity<?> createShip(@RequestBody ShipsJpaEntity ship) {
-            shipService.createShip(ship.getName(), ship.getImo(), ship.getCapacity());
-            return ResponseEntity.ok().build();
+    public ResponseEntity<?> createShip(@RequestBody ShipInDTO ship) {
+        shipService.createShip(ship);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
     @CheckAccess(permission = "UPDATE_SHIPS", companyId = "*")
-    public ResponseEntity<?> updateShip(@PathVariable("id") Long id, @RequestBody ShipsJpaEntity ship) {
-            shipService.updateShip(id, ship.getName(), ship.getImo(), ship.getCapacity());
-            return ResponseEntity.ok().build();
+    public ResponseEntity<?> updateShip(@PathVariable("id") Long id, @RequestBody ShipInDTO ship) {
+        shipService.updateShip(ship, id);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     @CheckAccess(permission = "DELETE_SHIPS", companyId = "*")
     public ResponseEntity<?> deleteShip(@PathVariable("id") Long id) {
-            shipService.deleteShip(id);
-            return ResponseEntity.ok().build();
+        shipService.deleteShip(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
     @CheckAccess(permission = "VIEW_SHIPS", companyId = "*")
     public ResponseEntity<?> getShipById(@PathVariable("id") Long id) {
-            return ResponseEntity.ok(shipService.getShipById(id));
+        return ResponseEntity.ok(shipService.getShipById(id));
     }
 
     @GetMapping("/imo/{imoNumber}")
     @CheckAccess(permission = "VIEW_SHIPS", companyId = "*")
     public ResponseEntity<?> getShipByImoNumber(@PathVariable("imoNumber") String imoNumber) {
-            return ResponseEntity.ok(shipService.getShipByImoNumber(imoNumber));
+        return ResponseEntity.ok(shipService.getShipByImoNumber(imoNumber));
     }
 
     @GetMapping
     @CheckAccess(permission = "VIEW_SHIPS", companyId = "*")
     public ResponseEntity<?> getAllShips() {
-            return ResponseEntity.ok(shipService.getAllShips());
+        return ResponseEntity.ok(shipService.getAllShips());
     }
 }

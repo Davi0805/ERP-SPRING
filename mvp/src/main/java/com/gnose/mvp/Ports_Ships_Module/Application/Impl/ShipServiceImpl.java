@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Module.Application.Impl;
 
+import com.gnose.mvp.Ports_Ships_Module.Adapter.ShipInDTO;
 import com.gnose.mvp.Ports_Ships_Module.Application.UseCases.IShipService;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Adapters.Repositories.ShipsJpaRepository;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.ShipsJpaEntity;
@@ -20,20 +21,20 @@ public class ShipServiceImpl implements IShipService {
     }
 
     @Override
-    public ShipsJpaEntity createShip(String name, String imoNumber, Integer capacity) {
+    public ShipsJpaEntity createShip(ShipInDTO dto) {
         ShipsJpaEntity ship = new ShipsJpaEntity();
-        ship.setName(name);
-        ship.setImo(imoNumber);
-        ship.setCapacity(capacity);
+        ship.setName(dto.getName());
+        ship.setImo(dto.getImo());
+        ship.setCapacity(dto.getCapacity());
 
         return jpaRepository.save(ship);
     }
 
     @Override
-    public void updateShip(Long id, String name, String imoNumber, Integer capacity) {
+    public void updateShip(ShipInDTO dto, Long id) {
         ShipsJpaEntity ship = jpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ship not found!"));
-        ship.setName(name);
-        ship.setImo(imoNumber);
+        ship.setName(dto.getName());
+        ship.setImo(dto.getImo());
 
         jpaRepository.save(ship);
     }

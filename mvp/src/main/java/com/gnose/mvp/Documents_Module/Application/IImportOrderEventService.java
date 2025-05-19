@@ -1,5 +1,7 @@
 package com.gnose.mvp.Documents_Module.Application;
 
+import com.gnose.mvp.Documents_Module.Adapter.DTO.DocumentDTO;
+
 public interface IImportOrderEventService {
-    Boolean isImportOrderValid(Long importOrderId, Long companyId);
+    Boolean isImportOrderValid(DocumentDTO dto);
 }
