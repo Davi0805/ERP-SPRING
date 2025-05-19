@@ -3,6 +3,7 @@ package com.gnose.mvp.Containers_Tests.Unit;
 import com.gnose.mvp.Containers_Module.Application.Impl.ContainerServiceImpl;
 import com.gnose.mvp.Containers_Module.Infrastructure.Adapters.ContainerJpaRepository;
 import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntity;
+import com.gnose.mvp.Exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,7 +30,7 @@ public class ContainerServiceTest {
 
     @Test
     public void getByIdShouldThrow() {
-        assertThrows(RuntimeException.class, () -> containerService.getById(1L));
+        assertThrows(NotFoundException.class, () -> containerService.getById(1L, List.of(1L)));
     }
 
     @Test
@@ -40,22 +41,22 @@ public class ContainerServiceTest {
 
     @Test
     public void getByWeightShouldThrow() {
-        assertThrows(RuntimeException.class, () -> containerService.getByWeight(1555));
+        assertThrows(RuntimeException.class, () -> containerService.getByWeight(1555, List.of(1L)));
     }
 
     @Test
     public void getByTypeShouldThrow() {
-        assertThrows(RuntimeException.class, () -> containerService.getByType("LIQUID"));
+        assertThrows(RuntimeException.class, () -> containerService.getByType("LIQUID", List.of(1L)));
     }
 
     @Test
     public void getByNumberShouldThrow() {
-        assertThrows(RuntimeException.class, () -> containerService.getByNumber("9869769"));
+        assertThrows(RuntimeException.class, () -> containerService.getByNumber("9869769", List.of(1L)));
     }
 
     @Test
     public void deleteShouldThrow() {
-        assertThrows(RuntimeException.class, () -> containerService.deleteContainer(1L));
+        assertThrows(RuntimeException.class, () -> containerService.deleteContainer(1L, List.of(1L)));
     }
 
     @Test
@@ -106,7 +107,7 @@ public class ContainerServiceTest {
         entity.setCompanyId(1L);
 
         when(jpaRepository.existsById(1L)).thenReturn(true);
-        containerService.deleteContainer(1L);
+        containerService.deleteContainer(1L, List.of(1L));
         verify(jpaRepository, times(1)).deleteById(1L);
     }
 
@@ -120,7 +121,7 @@ public class ContainerServiceTest {
         entity.setCompanyId(1L);
 
         when(jpaRepository.findById(1L)).thenReturn(Optional.of(entity));
-        ContainerJpaEntity result = containerService.getById(1L);
+        ContainerJpaEntity result = containerService.getById(1L, List.of(1L));
 
         assertEquals(entity, result);
     }
@@ -134,8 +135,8 @@ public class ContainerServiceTest {
         entity.setContainerNumber("DSDASDSASD");
         entity.setCompanyId(1L);
 
-        when(jpaRepository.findByContainerNumber("DSDASDSASD")).thenReturn(Optional.of(entity));
-        ContainerJpaEntity result = containerService.getByNumber("DSDASDSASD");
+        when(jpaRepository.findByContainerNumberAndCompanyIdIn("DSDASDSASD", List.of(1L))).thenReturn(Optional.of(entity));
+        ContainerJpaEntity result = containerService.getByNumber("DSDASDSASD", List.of(1L));
 
         assertEquals(entity, result);
     }
@@ -156,8 +157,8 @@ public class ContainerServiceTest {
         entity.setContainerNumber("556DSDASDSASD");
         entity.setCompanyId(1L);
 
-        when(jpaRepository.findByType("LIQUID")).thenReturn(Optional.of(List.of(entity, entity2)));
-        List<ContainerJpaEntity> result = containerService.getByType("LIQUID");
+        when(jpaRepository.findByTypeAndCompanyIdIn("LIQUID", List.of(1L))).thenReturn(Optional.of(List.of(entity, entity2)));
+        List<ContainerJpaEntity> result = containerService.getByType("LIQUID", List.of(1L));
 
         assertEquals(List.of(entity, entity2), result);
     }
@@ -178,8 +179,8 @@ public class ContainerServiceTest {
         entity.setContainerNumber("556DSDASDSASD");
         entity.setCompanyId(1L);
 
-        when(jpaRepository.findByWeight(4555)).thenReturn(Optional.of(List.of(entity, entity2)));
-        List<ContainerJpaEntity> result = containerService.getByWeight(4555);
+        when(jpaRepository.findByWeightAndCompanyIdIn(4555, List.of(1L))).thenReturn(Optional.of(List.of(entity, entity2)));
+        List<ContainerJpaEntity> result = containerService.getByWeight(4555, List.of(1L));
 
         assertEquals(List.of(entity, entity2), result);
     }

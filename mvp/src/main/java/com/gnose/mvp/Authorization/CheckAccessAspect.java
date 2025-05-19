@@ -4,6 +4,7 @@ import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntit
 import com.gnose.mvp.Core.Adapter.outbound.DTO.CompanyPermissionDTO;
 import com.gnose.mvp.Core.Adapter.outbound.DTO.SessionRedisDTO;
 import com.gnose.mvp.Core.Application.Impl.RedisServiceImpl;
+import com.gnose.mvp.Documents_Module.Adapter.DTO.DocumentDTO;
 import com.gnose.mvp.Exceptions.BadRequestException;
 import com.gnose.mvp.Exceptions.UnauthorizedException;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Adapters.inbound.ImportOrderDTO;
@@ -93,7 +94,8 @@ public class CheckAccessAspect {
         } catch (UnauthorizedException e) {
             throw new UnauthorizedException(e.getMessage());
         } catch (Exception e) {
-            throw new UnauthorizedException("An error occurred while checking access!");
+            System.err.println("Error in CheckAccessAspect: " + e.getMessage());
+            throw new BadRequestException("An error occurred while checking access!");
         }
     }
 

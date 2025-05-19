@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -42,7 +43,7 @@ public class ContainersMovementsServiceTest {
 
         when(containerJpaRepository.existsById(1L)).thenReturn(true);
 
-        containerMovementsService.createContainerMovement(entity);
+        containerMovementsService.createContainerMovement(entity, List.of(1L));
         verify(jpaRepository, times(1)).save(entity);
     }
 
