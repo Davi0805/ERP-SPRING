@@ -1,5 +1,6 @@
 package com.gnose.mvp.Ports_Ships_Module.Adapter.inbound;
 
+import com.gnose.mvp.Authorization.CheckAccess;
 import com.gnose.mvp.Ports_Ships_Module.Application.UseCases.IPortsService;
 import com.gnose.mvp.Ports_Ships_Module.Infrastructure.Entities.PortJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,68 +19,47 @@ public class PortsController {
     }
 
     @GetMapping
+    @CheckAccess(permission = "VIEW_PORT", companyId = "*")
     public ResponseEntity<?> getAllPorts() {
-        try {
             return ResponseEntity.ok(portsService.getAllPorts());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/country/{country}")
+    @CheckAccess(permission = "VIEW_PORT", companyId = "*")
     public ResponseEntity<?> getPortByCountry(@PathVariable("country") String country) {
-        try {
             return ResponseEntity.ok(portsService.getPortByCountry(country));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/code/{code}")
+    @CheckAccess(permission = "VIEW_PORT", companyId = "*")
     public ResponseEntity<?> getPortByCode(@PathVariable("code") String code) {
-        try {
             return ResponseEntity.ok(portsService.getPortByCode(code));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/{id}")
+    @CheckAccess(permission = "VIEW_PORT", companyId = "*")
     public ResponseEntity<?> getPortById(@PathVariable("id") Long id) {
-        try {
             return ResponseEntity.ok(portsService.getPortById(id));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping("/delete/{id}")
+    @CheckAccess(permission = "DELETE_PORT", companyId = "*")
     public ResponseEntity<?> deletePort(@PathVariable("id") Long id) {
-        try {
             portsService.deletePort(id);
             return ResponseEntity.ok("Port deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @PostMapping
+    @CheckAccess(permission = "CREATE_PORT", companyId = "*")
     public ResponseEntity<?> createPort(@RequestBody PortJpaEntity port) {
-        try {
             portsService.createPort(port.getName(), port.getCountry(), port.getCode());
-            return ResponseEntity.ok("Port created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+            return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
+    @CheckAccess(permission = "UPDATE_PORT", companyId = "*")
     public ResponseEntity<?> updatePort(@PathVariable("id") Long id, @RequestBody PortJpaEntity port) {
-        try {
             portsService.updatePort(id, port.getName(), port.getCountry(), port.getCode());
-            return ResponseEntity.ok("Port updated successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+            return ResponseEntity.ok().build();
     }
 }
