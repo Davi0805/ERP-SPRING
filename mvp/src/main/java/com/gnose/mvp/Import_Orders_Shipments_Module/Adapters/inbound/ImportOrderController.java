@@ -1,5 +1,7 @@
 package com.gnose.mvp.Import_Orders_Shipments_Module.Adapters.inbound;
 
+import com.gnose.mvp.Authorization.AuthorizationBaseController;
+import com.gnose.mvp.Authorization.CheckAccess;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Application.UseCases.IImportOrderService;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Entities.ImportOrdersJpaEntity;
 import org.apache.coyote.Response;
@@ -11,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/import_order")
-public class ImportOrderController {
+public class ImportOrderController extends AuthorizationBaseController {
 
     private final IImportOrderService importOrderService;
 
@@ -22,72 +24,48 @@ public class ImportOrderController {
     }
 
     @PostMapping
+    @CheckAccess(permission = "CREATE_IMPORT_ORDER", companyId = "#companyId")
     public ResponseEntity<?> create(@RequestBody ImportOrderDTO importOrders)
     {
-        try {
-            ImportOrdersJpaEntity entity = new ImportOrdersJpaEntity();
-            entity.setCompanyId(importOrders.getCompanyId());
-            entity.setStatus(importOrders.getStatus());
-            entity.setOrderNumber(UUID.randomUUID());
-
-
-            importOrderService.create(entity);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        importOrderService.create(importOrders);
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") // todo: evaluate safety
+    @CheckAccess(permission = "UPDATE_IMPORT_ORDER", companyId = "#companyId")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ImportOrdersJpaEntity importOrders)
     {
-        try {
-            importOrderService.update(importOrders);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        importOrderService.update(importOrders);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
+    @CheckAccess(permission = "VIEW_IMPORT_ORDER", companyId = "*")
     public ResponseEntity<?> getById(@PathVariable Long id)
     {
-        try {
-            return ResponseEntity.ok(importOrderService.getById(id));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(importOrderService.getById(id, getAuthorizedCompanyIds()));
     }
 
     @DeleteMapping("/{id}")
+    @CheckAccess(permission = "DELETE_IMPORT_ORDER", companyId = "*")
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
-        try {
-            importOrderService.deleteImportOrder(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        importOrderService.deleteImportOrder(id, getAuthorizedCompanyIds());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/company/{id}")
+    @CheckAccess(permission = "VIEW_IMPORT_ORDER", companyId = "id")
     public ResponseEntity<?> getAllByCompanyId(@PathVariable Long id)
     {
-        try {
-            return ResponseEntity.ok(importOrderService.getAllByCompanyId(id));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(importOrderService.getAllByCompanyId(id));
     }
 
-    @GetMapping("/company/{company}/status/{status}")
+    @GetMapping("/company/{companyId}/status/{status}")
+    @CheckAccess(permission = "VIEW_IMPORT_ORDER", companyId = "companyId")
     public ResponseEntity<?> getAllByCompanyIdAndStatus(@PathVariable Long companyId, @PathVariable String status)
     {
-        try {
             return ResponseEntity.ok(importOrderService.getAllByCompanyIdAndStatus(companyId, status));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
 }

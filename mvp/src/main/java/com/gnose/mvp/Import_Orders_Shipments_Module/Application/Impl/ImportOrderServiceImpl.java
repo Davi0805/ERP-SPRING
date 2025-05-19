@@ -1,5 +1,7 @@
 package com.gnose.mvp.Import_Orders_Shipments_Module.Application.Impl;
 
+import com.gnose.mvp.Exceptions.UnauthorizedException;
+import com.gnose.mvp.Import_Orders_Shipments_Module.Adapters.inbound.ImportOrderDTO;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Application.UseCases.IImportOrderService;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Adapters.ImportOrderJpaRepository;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Entities.ImportOrdersJpaEntity;
@@ -20,13 +22,16 @@ public class ImportOrderServiceImpl implements IImportOrderService {
     }
 
     @Override
-    public ImportOrdersJpaEntity getById(Long importOrderId) {
-        return importOrderJpaRepository.findById(importOrderId).orElseThrow(() -> new RuntimeException("Order not found!"));
+    public ImportOrdersJpaEntity getById(Long importOrderId, List<Long> companyIds) {
+        ImportOrdersJpaEntity entity = importOrderJpaRepository.findById(importOrderId)
+                .orElseThrow(() -> new RuntimeException("Order not found!"));
+        if (!companyIds.contains(entity.getCompanyId())) throw new UnauthorizedException("Not allowed to see this order");
+        return entity;
     }
 
     @Override
-    public ImportOrdersJpaEntity create(ImportOrdersJpaEntity importOrder) {
-        return importOrderJpaRepository.save(importOrder);
+    public ImportOrdersJpaEntity create(ImportOrderDTO importOrder) {
+        return importOrderJpaRepository.save(new ImportOrdersJpaEntity(importOrder));
     }
 
     @Override
@@ -37,7 +42,7 @@ public class ImportOrderServiceImpl implements IImportOrderService {
     }
 
     @Override
-    public void deleteImportOrder(Long importOrderId) {
+    public void deleteImportOrder(Long importOrderId, List<Long> companyIds) {
         if (!importOrderJpaRepository.existsById(importOrderId))
             throw new RuntimeException("Order not found!");
         importOrderJpaRepository.deleteById(importOrderId);
@@ -45,11 +50,11 @@ public class ImportOrderServiceImpl implements IImportOrderService {
 
     @Override
     public List<ImportOrdersJpaEntity> getAllByCompanyId(Long companyId) {
-        return importOrderJpaRepository.findByCompanyId(companyId).orElseThrow(() -> new RuntimeException("Containers not found!"));
+        return importOrderJpaRepository.findByCompanyId(companyId).orElseThrow(() -> new RuntimeException("Orders not found!"));
     }
 
     @Override
     public List<ImportOrdersJpaEntity> getAllByCompanyIdAndStatus(Long companyId, String status) {
-        return importOrderJpaRepository.findByCompanyIdAndStatus(companyId, status).orElseThrow(() -> new RuntimeException("Containers not found!"));
+        return importOrderJpaRepository.findByCompanyIdAndStatus(companyId, status).orElseThrow(() -> new RuntimeException("Orders not found!"));
     }
 }

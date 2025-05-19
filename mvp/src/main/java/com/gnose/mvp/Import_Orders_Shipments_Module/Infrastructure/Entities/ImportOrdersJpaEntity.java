@@ -1,5 +1,6 @@
 package com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Entities;
 
+import com.gnose.mvp.Import_Orders_Shipments_Module.Adapters.inbound.ImportOrderDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +35,12 @@ public class ImportOrdersJpaEntity {
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    public ImportOrdersJpaEntity(ImportOrderDTO dto)
+    {
+        this.companyId = dto.getCompanyId();
+        this.status = dto.getStatus();
+        this.orderNumber = UUID.randomUUID();
+        this.createdAt = LocalDateTime.now();
+    }
 }

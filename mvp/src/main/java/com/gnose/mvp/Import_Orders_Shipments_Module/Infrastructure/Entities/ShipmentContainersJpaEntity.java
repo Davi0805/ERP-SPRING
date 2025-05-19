@@ -1,5 +1,6 @@
 package com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Entities;
 
+import com.gnose.mvp.Import_Orders_Shipments_Module.Adapters.inbound.ShipmentContainerDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,4 +26,10 @@ public class ShipmentContainersJpaEntity {
 
     @Column(nullable = false)
     private Long containerId;
+
+    public ShipmentContainersJpaEntity(ShipmentContainerDTO dto)
+    {
+        this.containerId = dto.getContainerId();
+        this.shipmentId = dto.getShipmentId();
+    }
 }

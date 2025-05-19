@@ -1,5 +1,6 @@
 package com.gnose.mvp.Import_Orders_Shipments_Module.Application.Impl;
 
+import com.gnose.mvp.Import_Orders_Shipments_Module.Adapters.inbound.ShipmentContainerDTO;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Application.UseCases.IShipmentsContainerService;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Adapters.ShipmentContainersJpaRepository;
 import com.gnose.mvp.Import_Orders_Shipments_Module.Infrastructure.Entities.ShipmentContainersJpaEntity;
@@ -26,8 +27,9 @@ public class ShipmentContainerServiceImpl implements IShipmentsContainerService 
     }
 
     @Override
-    public ShipmentContainersJpaEntity save(ShipmentContainersJpaEntity shipmentContainer) {
-        return shipmentContainersJpaRepository.save(shipmentContainer);
+    public ShipmentContainersJpaEntity save(ShipmentContainerDTO shipmentContainer) {
+        // todo: implement a auth logic to check if the shipment and container is related to user companies
+        return shipmentContainersJpaRepository.save(new ShipmentContainersJpaEntity(shipmentContainer));
     }
 
     @Override
