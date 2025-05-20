@@ -34,6 +34,15 @@ public class CheckAccessAspect {
         this.redisService = redisService;
     }
 
+    /// Annotation to authenticate and check authorization of users
+    /// param - permission (String) - receives the string value of permissions
+    /// Ex: "CREATE_CONTAINER", "VIEW_CONTAINER" ...
+    /// param - companyId (String) - receive an expression or variable
+    /// to extract companyId and verify auth
+    /// Ex: "#companyId" - extracting from body | "companyId" - extracting from pathVariable
+    /// or save the users permission on request attributes when receive
+    /// Ex: "*" - extracting users permissions, it can be accessed
+    /// with AuthorizationBaseController methods
     @Around("@annotation(com.gnose.mvp.Authorization.CheckAccess)")
     public Object checkAccess(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
