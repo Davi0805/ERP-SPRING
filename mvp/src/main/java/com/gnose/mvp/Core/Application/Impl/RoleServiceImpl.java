@@ -3,6 +3,7 @@ package com.gnose.mvp.Core.Application.Impl;
 import com.gnose.mvp.Core.Infrastructure.Adapter.Outbound.JpaRepositories.RoleJpaRepository;
 import com.gnose.mvp.Core.Application.UseCases.IRoleService;
 import com.gnose.mvp.Core.Infrastructure.Entities.RolesJpaEntity;
+import com.gnose.mvp.Exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +30,10 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void deleteRole(Long id) {
-        if (!jpaRepository.existsById(id))
-            throw new RuntimeException("Role not found!");
+    public void deleteRole(Long id, List<Long> companyIds) {
+        RolesJpaEntity entity = jpaRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found!"));
+        if (!companyIds.contains(entity.getCompanyId()))
+            throw new NotFoundException("Role not found!");
         jpaRepository.deleteById(id);
     }
 

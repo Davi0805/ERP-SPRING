@@ -1,5 +1,7 @@
 package com.gnose.mvp.Core.Adapter.inbound.Rest.General;
 
+import com.gnose.mvp.Authorization.AuthorizationBaseController;
+import com.gnose.mvp.Authorization.CheckAccess;
 import com.gnose.mvp.Core.Application.UseCases.IRoleService;
 import com.gnose.mvp.Core.Infrastructure.Entities.RolesJpaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/roles")
-public class RoleController {
+public class RoleController extends AuthorizationBaseController {
 
     private final IRoleService roleService;
 
@@ -25,23 +27,16 @@ public class RoleController {
     }
 
     @PostMapping
+    @CheckAccess(permission = "MANAGE_USERS", companyId = "#companyId")
     public ResponseEntity<?> createRole(@RequestBody RolesJpaEntity role) {
-
-        try {
             return ResponseEntity.ok(roleService.createRole(role));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error creating role!");
-        }
     }
 
 
     @DeleteMapping("/{id}")
+    @CheckAccess(permission = "MANAGE_USERS", companyId = "*")
     public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
-        try {
-            roleService.deleteRole(id);
+            roleService.deleteRole(id, getAuthorizedCompanyIds());
             return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

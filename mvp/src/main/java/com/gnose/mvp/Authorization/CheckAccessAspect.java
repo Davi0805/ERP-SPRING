@@ -93,9 +93,6 @@ public class CheckAccessAspect {
 
         } catch (UnauthorizedException e) {
             throw new UnauthorizedException(e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Error in CheckAccessAspect: " + e.getMessage());
-            throw new BadRequestException("An error occurred while checking access!");
         }
     }
 

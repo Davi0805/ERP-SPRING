@@ -7,6 +7,6 @@ import java.util.List;
 public interface IRoleService {
     List<RolesJpaEntity> getAllRoles();
     RolesJpaEntity createRole(RolesJpaEntity role);
-    void deleteRole(Long id);
+    void deleteRole(Long id, List<Long> companyIds);
     RolesJpaEntity getRoleById(Long id);
 }
