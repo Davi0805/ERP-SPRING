@@ -12,6 +12,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -29,25 +32,31 @@ import java.util.Map;
 public class CheckAccessAspect {
 
     private final RedisServiceImpl redisService;
+    private static final Logger log = LoggerFactory.getLogger(CheckAccessAspect.class);
 
     public CheckAccessAspect(RedisServiceImpl redisService) {
         this.redisService = redisService;
     }
 
-    /// Annotation to authenticate and check authorization of users
-    /// param - permission (String) - receives the string value of permissions
-    /// Ex: "CREATE_CONTAINER", "VIEW_CONTAINER" ...
-    /// param - companyId (String) - receive an expression or variable
-    /// to extract companyId and verify auth
-    /// Ex: "#companyId" - extracting from body | "companyId" - extracting from pathVariable
-    /// or save the users permission on request attributes when receive
-    /// Ex: "*" - extracting users permissions, it can be accessed
-    /// with AuthorizationBaseController methods
+    /**
+     * Annotation to authenticate and check authorization of users
+     * @param - permission (String) - receives the string value of permissions
+     * Ex: "CREATE_CONTAINER", "VIEW_CONTAINER" ...
+     * @param - companyId (String) - receive an expression or variable
+     * to extract companyId and verify auth
+     * Ex: "#companyId" - extracting from body | "companyId" - extracting from pathVariable
+     * or save the users permission on request attributes when receive
+     * Ex: "*" - extracting users permissions, it can be accessed
+     * with AuthorizationBaseController methods
+     * @throws UnauthorizedException
+     */
     @Around("@annotation(com.gnose.mvp.Authorization.CheckAccess)")
     public Object checkAccess(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             HttpServletRequest request = (HttpServletRequest) RequestContextHolder.currentRequestAttributes()
                     .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+
+            MDC.put("ip-address", getClientIp(request));
 
             String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -88,6 +97,9 @@ public class CheckAccessAspect {
                 throw new UnauthorizedException("Company ID not found");
             }
 
+            // logging companyId even if unauthorized
+            MDC.put("companyId", String.valueOf(companyId));
+
             boolean hasAccess = session.getCompanyPermission().stream()
                     .filter(company -> company.getCompanyId().equals(companyId))
                     .flatMap(company -> company.getPermissions().stream())
@@ -101,9 +113,11 @@ public class CheckAccessAspect {
             return joinPoint.proceed();
 
         } catch (UnauthorizedException e) {
+            log.warn(e.getMessage());
             throw new UnauthorizedException(e.getMessage());
         }
     }
+
 
     private Long resolveCompanyId(String expression, ProceedingJoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
@@ -136,6 +150,21 @@ public class CheckAccessAspect {
             }
         }
 
+
         throw new BadRequestException("Unable to resolve companyId");
+    }
+
+    private static String getClientIp(HttpServletRequest request) {
+
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+
+        return remoteAddr;
     }
 }

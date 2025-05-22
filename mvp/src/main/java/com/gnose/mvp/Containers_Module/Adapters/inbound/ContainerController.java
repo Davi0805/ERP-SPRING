@@ -5,6 +5,10 @@ import com.gnose.mvp.Authorization.CheckAccess;
 import com.gnose.mvp.Containers_Module.Application.UseCases.IContainerService;
 import com.gnose.mvp.Containers_Module.Infrastructure.Entities.ContainerJpaEntity;
 import com.gnose.mvp.Core.Adapter.outbound.DTO.CompanyPermissionDTO;
+import com.gnose.mvp.Logging.LogContext;
+import lombok.extern.java.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +17,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/containers")
+@LogContext(module = "Containers")
 public class ContainerController extends AuthorizationBaseController {
 
     private final IContainerService containerService;
+    private static final Logger log = LoggerFactory.getLogger(ContainerController.class);
 
     @Autowired
     public ContainerController(IContainerService containerService) {
@@ -25,6 +31,7 @@ public class ContainerController extends AuthorizationBaseController {
     @PostMapping
     @CheckAccess(permission = "CREATE_CONTAINER", companyId = "#companyId")
     public ResponseEntity<?> createContainer(@RequestBody ContainerJpaEntity container) {
+        log.info("TESTANDOOOOO");
         containerService.createContainer(container);
         return ResponseEntity.ok().build();
     }
